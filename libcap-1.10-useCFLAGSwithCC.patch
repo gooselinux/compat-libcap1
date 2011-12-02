@@ -1,0 +1,22 @@
+--- libcap-1.10/libcap/Makefile.BAD	2006-07-13 20:42:35.000000000 -0400
++++ libcap-1.10/libcap/Makefile	2006-07-13 20:42:53.000000000 -0400
+@@ -56,7 +56,7 @@
+ #	@sed -ne '/^#define[ \t]CAP[_A-Z]\+[ \t]\+[0-9]\+/{s/^#define CAP_\([^ \t]*\)[ \t]*\([^ \t]*\)/  \{ \2, \"\1\" \},/;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;p;}' < /usr/include/linux/capability.h | fgrep -v 0x > cap_names.sed
+ 
+ $(MINLIBNAME): $(OBJS)
+-	$(CC) -Wl,-soname,$(MAJLIBNAME) -Wl,-x -shared -o $@ $(OBJS)
++	$(CC) $(COPTFLAG) -Wl,-soname,$(MAJLIBNAME) -Wl,-x -shared -o $@ $(OBJS)
+ 	ln -sf $(MINLIBNAME) $(MAJLIBNAME)
+ 	ln -sf $(MAJLIBNAME) $(LIBNAME)
+ 
+--- libcap-1.10/progs/Makefile.BAD	2006-07-13 20:48:44.000000000 -0400
++++ libcap-1.10/progs/Makefile	2006-07-13 20:48:54.000000000 -0400
+@@ -36,7 +36,7 @@
+ all: $(PROGS)
+ 
+ $(PROGS): %: %.o
+-	$(CC) $(LDFLAGS) -o $@ $< $(LIBS)
++	$(CC) $(COPTFLAG) $(LDFLAGS) -o $@ $< $(LIBS)
+ 
+ %.o: %.c $(INCS)
+ 	$(CC) $(CFLAGS) -c $< -o $@
